@@ -1,0 +1,493 @@
+/* =====================
+   레이아웃 컨테이너
+   ===================== */
+
+.page {
+  width: 100%;
+  max-width: 430px;
+  min-height: 100svh;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.08);
+}
+
+/* =====================
+   시작 화면
+   ===================== */
+
+.start-page {
+  justify-content: space-between;
+  padding: 0 0 40px;
+}
+
+.start-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 28px 40px;
+  gap: 12px;
+}
+
+.start-emoji {
+  font-size: 72px;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.start-title {
+  font-size: 26px;
+  font-weight: 800;
+  color: #111111;
+  letter-spacing: -0.5px;
+  text-align: center;
+}
+
+.start-subtitle {
+  font-size: 16px;
+  color: #888888;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.start-chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.chip {
+  background: #f5f5f5;
+  border-radius: 100px;
+  padding: 6px 14px;
+  font-size: 13px;
+  color: #555555;
+  font-weight: 500;
+}
+
+.start-footer {
+  padding: 0 20px;
+}
+
+/* =====================
+   공통 버튼
+   ===================== */
+
+.btn-primary {
+  width: 100%;
+  padding: 18px;
+  background: #111111;
+  color: #ffffff;
+  font-size: 17px;
+  font-weight: 700;
+  border-radius: 16px;
+  letter-spacing: -0.2px;
+  transition: opacity 0.15s, transform 0.1s;
+}
+
+.btn-primary:active {
+  opacity: 0.85;
+  transform: scale(0.98);
+}
+
+/* =====================
+   질문 화면
+   ===================== */
+
+.question-page {
+  background: #fafafa;
+}
+
+.question-nav {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px 12px;
+  background: #fafafa;
+}
+
+.back-btn {
+  font-size: 22px;
+  color: #333333;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+
+.back-btn:hover:not(:disabled) {
+  background: #eeeeee;
+}
+
+.back-btn:disabled {
+  color: #cccccc;
+  cursor: default;
+}
+
+.progress-wrap {
+  flex: 1;
+  height: 6px;
+  background: #e8e8e8;
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 100px;
+  background: #111111;
+  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.progress-fill.extra {
+  background: linear-gradient(to right, #7F77DD, #D4537E);
+}
+
+.extra-badge {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: #7F77DD;
+  padding: 0 20px 6px;
+  letter-spacing: 0.2px;
+}
+
+.question-content {
+  flex: 1;
+  padding: 24px 20px 32px;
+  display: flex;
+  flex-direction: column;
+}
+
+.situation-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 24px 20px;
+  margin-bottom: 28px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.situation-text {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #222222;
+  font-weight: 400;
+  word-break: keep-all;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.option-btn {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 18px 20px;
+  text-align: left;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  border: 2px solid transparent;
+  transition: border-color 0.15s, transform 0.1s, box-shadow 0.15s;
+}
+
+.option-btn:hover {
+  border-color: #dddddd;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.09);
+}
+
+.option-btn:active {
+  transform: scale(0.98);
+  border-color: #111111;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.option-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #aaaaaa;
+  flex-shrink: 0;
+  margin-top: 1px;
+  width: 18px;
+}
+
+.option-text {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #222222;
+  font-weight: 400;
+  word-break: keep-all;
+}
+
+/* =====================
+   로딩 화면
+   ===================== */
+
+.loading-page {
+  justify-content: center;
+  align-items: center;
+  background: #ffffff;
+}
+
+.loading-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.loading-spinner {
+  width: 44px;
+  height: 44px;
+  border: 3px solid #eeeeee;
+  border-top-color: #333333;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-msg {
+  font-size: 15px;
+  color: #888888;
+  font-weight: 500;
+  letter-spacing: -0.2px;
+}
+
+/* =====================
+   결과 화면
+   ===================== */
+
+.result-page {
+  background: #ffffff;
+  overflow-y: auto;
+}
+
+/* 헤더 */
+.result-header {
+  padding: 52px 28px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+}
+
+.type-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.character-circle {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 2px dashed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin: 8px 0 12px;
+}
+
+.character-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.result-names {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.result-subtitle {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.result-name {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+}
+
+.result-slogan {
+  font-size: 14px;
+  margin-top: 4px;
+  font-style: italic;
+}
+
+/* 바디 */
+.result-body {
+  padding: 0 0 48px;
+}
+
+.result-section {
+  padding: 28px 24px;
+}
+
+.section-title {
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  margin-bottom: 16px;
+  line-height: 1.4;
+}
+
+.section-title.center {
+  text-align: center;
+}
+
+.divider {
+  height: 8px;
+  background: #f5f5f5;
+}
+
+/* 팩폭 번호 리스트 */
+.fact-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  padding: 0;
+}
+
+.fact-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.fact-num {
+  font-size: 13px;
+  font-weight: 800;
+  flex-shrink: 0;
+  width: 18px;
+  padding-top: 1px;
+}
+
+.fact-text {
+  font-size: 14px;
+  line-height: 1.65;
+  color: #444444;
+  word-break: keep-all;
+}
+
+/* 더 읽어보기 accordion */
+.read-more {
+  border-top: 1px solid #f0f0f0;
+}
+
+.read-more-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+  letter-spacing: -0.2px;
+  user-select: none;
+}
+
+.read-more-summary::-webkit-details-marker {
+  display: none;
+}
+
+.chevron {
+  font-size: 18px;
+  transition: transform 0.2s;
+  color: #aaaaaa;
+}
+
+details[open] .chevron {
+  transform: rotate(180deg);
+}
+
+.read-more-body {
+  border-top: 1px solid #f5f5f5;
+}
+
+/* 그림자 섹션 — 좌측 컬러 보더 */
+.shadow-section {
+  border-left: 3px solid;
+  margin: 0 24px;
+  padding: 24px 20px;
+  border-radius: 0 8px 8px 0;
+}
+
+.body-text {
+  font-size: 15px;
+  line-height: 1.75;
+  color: #333333;
+  margin-bottom: 12px;
+  word-break: keep-all;
+}
+
+.body-text:last-child {
+  margin-bottom: 0;
+}
+
+/* CTA 버튼 */
+.cta-buttons {
+  display: flex;
+  gap: 10px;
+  padding: 24px 24px 0;
+}
+
+.btn-cta-outline {
+  flex: 1;
+  padding: 16px 0;
+  background: transparent;
+  color: #888888;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 14px;
+  border: 1.5px solid #dddddd;
+  letter-spacing: -0.2px;
+  transition: opacity 0.15s, transform 0.1s;
+}
+
+.btn-cta-outline:active {
+  opacity: 0.7;
+  transform: scale(0.97);
+}
+
+.btn-cta-share {
+  flex: 1.3;
+  padding: 16px 0;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: 14px;
+  border: none;
+  letter-spacing: -0.2px;
+  transition: opacity 0.15s, transform 0.1s;
+}
+
+.btn-cta-share:active {
+  opacity: 0.85;
+  transform: scale(0.97);
+}
