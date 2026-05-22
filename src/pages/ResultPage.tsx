@@ -19,7 +19,7 @@ export function ResultPage({ typeData, onRestart }: ResultPageProps) {
     if (navigator.share) {
       navigator.share({
         title: '9가지 성격 테스트',
-        text: `나의 유형은 "${name}"이에요! 나도 몰랐던 내 행동의 이유를 알아보세요.`,
+        text: `${subtitle}\n\n${name}`,
         url: window.location.href,
       });
     } else {
