@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { PersonalityType } from '../types/quiz';
 
 interface ResultPageProps {
@@ -8,12 +9,11 @@ interface ResultPageProps {
 export function ResultPage({ typeData, onRestart }: ResultPageProps) {
   const { id, name, subtitle, tag, emoji, color, factPunch, youAre, shadow } = typeData;
   const isDark = id === 1;
+  const [imgFailed, setImgFailed] = useState(false);
 
   const headerGradient = `linear-gradient(160deg, ${color.headerGradient[0]}, ${color.headerGradient[1]}, ${color.headerGradient[2]})`;
   const textColor = isDark ? '#ffffff' : '#2C2C2A';
   const mutedColor = isDark ? 'rgba(255,255,255,0.65)' : 'rgba(0,0,0,0.45)';
-  const charBg = isDark ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.6)';
-  const charBorder = isDark ? 'rgba(255,255,255,0.25)' : 'rgba(0,0,0,0.12)';
 
   const handleShare = () => {
     if (navigator.share) {
@@ -36,17 +36,16 @@ export function ResultPage({ typeData, onRestart }: ResultPageProps) {
       <div className="result-header" style={{ background: headerGradient }}>
         <span className="type-label" style={{ color: mutedColor }}>TYPE {id}</span>
 
-        <div
-          className="character-circle"
-          style={{ background: charBg, borderColor: charBorder }}
-        >
+        {imgFailed ? (
+          <span className="character-fallback-emoji">{emoji}</span>
+        ) : (
           <img
             src={`/images/type${id}.png`}
             alt={name}
             className="character-img"
-            onError={e => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+            onError={() => setImgFailed(true)}
           />
-        </div>
+        )}
 
         <div className="result-names">
           <p className="result-subtitle" style={{ color: mutedColor }}>{subtitle}</p>
@@ -97,10 +96,7 @@ export function ResultPage({ typeData, onRestart }: ResultPageProps) {
             <div className="divider" />
 
             {/* 너의 그림자 */}
-            <section
-              className="result-section shadow-section"
-              style={{ borderLeftColor: color.main }}
-            >
+            <section className="result-section shadow-section">
               <h2 className="section-title" style={{ color: color.dark }}>
                 🌙 너의 그림자
               </h2>
