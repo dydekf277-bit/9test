@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import questionsData from '../data/questions.json';
-import type { QuizState, VerifyAttempt, CurrentQuestion } from '../types/quiz';
+import type { QuizState, VerifyAttempt, CurrentQuestion, HistoryEntry } from '../types/quiz';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const q = questionsData as any;
@@ -15,7 +15,6 @@ const INITIAL: QuizState = {
   isExtraVerify: false,
   displayStep: 1,
   resultType: null,
-  selectedAnswer: null,
 };
 
 function computeNext(s: QuizState, choice: 'A' | 'B'): QuizState {
@@ -89,28 +88,36 @@ function computeNext(s: QuizState, choice: 'A' | 'B'): QuizState {
 
 export function useQuiz() {
   const [state, setState] = useState<QuizState>(INITIAL);
-  const [history, setHistory] = useState<QuizState[]>([]);
+  const [history, setHistory] = useState<HistoryEntry[]>([]);
+  // UI 복원용: 뒤로가기로 돌아온 문항에서만 이전 선택을 표시, 앞으로 갈 땐 항상 null
+  const [restoredChoice, setRestoredChoice] = useState<'A' | 'B' | null>(null);
 
   const start = () => {
     setHistory([]);
+    setRestoredChoice(null);
     setState({ ...INITIAL, phase: 'question' });
   };
 
   const answer = (choice: 'A' | 'B') => {
-    // 현재 선택값을 history에 기록해 뒤로가기 시 복원에 사용
-    setHistory(h => [...h, { ...state, selectedAnswer: choice }]);
-    setState(prev => ({ ...computeNext(prev, choice), selectedAnswer: null }));
+    // 히스토리에 현재 state + 선택값 기록 (뒤로가기 시 복원용)
+    setHistory(h => [...h, { state, choice }]);
+    // 앞으로 갈 땐 항상 선택 강조 없음
+    setRestoredChoice(null);
+    setState(prev => computeNext(prev, choice));
   };
 
   const goBack = () => {
     if (history.length === 0) return;
-    const prev = history[history.length - 1];
+    const last = history[history.length - 1];
     setHistory(h => h.slice(0, -1));
-    setState(prev);
+    // 돌아간 문항에서 이전에 골랐던 선택을 복원
+    setRestoredChoice(last.choice);
+    setState(last.state);
   };
 
   const restart = () => {
     setHistory([]);
+    setRestoredChoice(null);
     setState(INITIAL);
   };
 
@@ -129,6 +136,7 @@ export function useQuiz() {
     state,
     canGoBack: history.length > 0,
     currentQuestion: getCurrentQuestion(),
+    restoredChoice,
     start,
     answer,
     goBack,

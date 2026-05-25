@@ -43,7 +43,7 @@ function App() {
         displayStep={state.displayStep}
         isExtraVerify={state.isExtraVerify}
         canGoBack={quiz.canGoBack}
-        selectedAnswer={state.selectedAnswer}
+        selectedAnswer={quiz.restoredChoice}
         onAnswer={quiz.answer}
         onBack={quiz.goBack}
       />
