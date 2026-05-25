@@ -5,6 +5,7 @@ interface QuestionPageProps {
   displayStep: number;
   isExtraVerify: boolean;
   canGoBack: boolean;
+  selectedAnswer: 'A' | 'B' | null;
   onAnswer: (choice: 'A' | 'B') => void;
   onBack: () => void;
 }
@@ -14,6 +15,7 @@ export function QuestionPage({
   displayStep,
   isExtraVerify,
   canGoBack,
+  selectedAnswer,
   onAnswer,
   onBack,
 }: QuestionPageProps) {
@@ -52,11 +54,17 @@ export function QuestionPage({
         </div>
 
         <div className="options">
-          <button className="option-btn" onClick={() => onAnswer('A')}>
+          <button
+            className={`option-btn${selectedAnswer === 'A' ? ' selected' : ''}`}
+            onClick={() => onAnswer('A')}
+          >
             <span className="option-label">A</span>
             <span className="option-text">{question.optionA}</span>
           </button>
-          <button className="option-btn" onClick={() => onAnswer('B')}>
+          <button
+            className={`option-btn${selectedAnswer === 'B' ? ' selected' : ''}`}
+            onClick={() => onAnswer('B')}
+          >
             <span className="option-label">B</span>
             <span className="option-text">{question.optionB}</span>
           </button>

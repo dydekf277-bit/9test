@@ -33,12 +33,17 @@ function App() {
   }
 
   if (state.phase === 'question' && quiz.currentQuestion) {
+    const questionKey = state.verifyType === null
+      ? state.exploreKey
+      : `${state.verifyType}-${state.verifyIndex}`;
     return (
       <QuestionPage
+        key={questionKey}
         questionData={quiz.currentQuestion}
         displayStep={state.displayStep}
         isExtraVerify={state.isExtraVerify}
         canGoBack={quiz.canGoBack}
+        selectedAnswer={state.selectedAnswer}
         onAnswer={quiz.answer}
         onBack={quiz.goBack}
       />

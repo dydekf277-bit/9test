@@ -242,6 +242,9 @@
 
 .option-btn:active {
   transform: scale(0.98);
+}
+
+.option-btn.selected {
   border-color: #FAC8AA;
   background: rgba(250, 200, 170, 0.12);
 }

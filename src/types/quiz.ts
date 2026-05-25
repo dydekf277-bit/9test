@@ -49,6 +49,7 @@ export interface QuizState {
   isExtraVerify: boolean;
   displayStep: number;
   resultType: number | null;
+  selectedAnswer: 'A' | 'B' | null;
 }
 
 export interface CurrentQuestion {

@@ -15,6 +15,7 @@ const INITIAL: QuizState = {
   isExtraVerify: false,
   displayStep: 1,
   resultType: null,
+  selectedAnswer: null,
 };
 
 function computeNext(s: QuizState, choice: 'A' | 'B'): QuizState {
@@ -96,8 +97,9 @@ export function useQuiz() {
   };
 
   const answer = (choice: 'A' | 'B') => {
-    setHistory(h => [...h, state]);
-    setState(prev => computeNext(prev, choice));
+    // 현재 선택값을 history에 기록해 뒤로가기 시 복원에 사용
+    setHistory(h => [...h, { ...state, selectedAnswer: choice }]);
+    setState(prev => ({ ...computeNext(prev, choice), selectedAnswer: null }));
   };
 
   const goBack = () => {
