@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { getTossShareLink, share } from '@apps-in-toss/web-bridge';
 import type { PersonalityType } from '../types/quiz';
 
 interface ResultPageProps {
@@ -15,18 +16,12 @@ export function ResultPage({ typeData, onRestart }: ResultPageProps) {
   const textColor = isDark ? '#ffffff' : '#2C2C2A';
   const mutedColor = isDark ? 'rgba(255,255,255,0.65)' : 'rgba(0,0,0,0.45)';
 
-  const handleShare = () => {
-    if (navigator.share) {
-      navigator.share({
-        title: '9가지 성격 테스트',
-        text: `${subtitle}\n\n${name}`,
-        url: window.location.href,
-      });
-    } else {
-      navigator.clipboard?.writeText(window.location.href).then(() => {
-        alert('링크가 복사됐어요!');
-      });
-    }
+  const handleShare = async () => {
+    const ogImageUrl = 'https://raw.githubusercontent.com/dydekf277-bit/9test/main/public/og.png';
+    const tossLink = await getTossShareLink('intoss://9personality', ogImageUrl);
+    await share({
+      message: `MBTI보다 정확한 내 성격을 알아볼 수 있어요.\n\n${tossLink}`,
+    });
   };
 
   return (

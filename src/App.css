@@ -18,6 +18,7 @@
    ===================== */
 
 .start-page {
+  background: #F9EFDC;
   justify-content: space-between;
   padding: 0 0 40px;
 }
@@ -28,50 +29,82 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 60px 28px 40px;
-  gap: 12px;
+  padding: 48px 28px 0;
 }
 
-.start-emoji {
-  font-size: 72px;
-  line-height: 1;
-  margin-bottom: 8px;
+/* 에니어그램 원형 캐릭터 배치 */
+.enneagram-circle {
+  position: relative;
+  width: 355px;
+  height: 355px;
+  flex-shrink: 0;
 }
 
-.start-title {
-  font-size: 26px;
-  font-weight: 800;
-  color: #111111;
-  letter-spacing: -0.5px;
+.enneagram-char {
+  position: absolute;
+  width: 82px;
+  height: 82px;
+  object-fit: contain;
+}
+
+.circle-center-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 19px;
+  font-weight: 500;
+  color: #2C2C2A;
   text-align: center;
+  line-height: 1.45;
+  white-space: nowrap;
+  pointer-events: none;
 }
 
 .start-subtitle {
-  font-size: 16px;
-  color: #888888;
+  margin-top: 8px;
+  font-size: 15px;
+  color: #888780;
   text-align: center;
   line-height: 1.5;
 }
 
-.start-chips {
+.start-badges {
   display: flex;
   gap: 8px;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 8px;
+  margin-top: 52px;
 }
 
-.chip {
-  background: #f5f5f5;
-  border-radius: 100px;
-  padding: 6px 14px;
+.start-badge {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 7px 16px;
   font-size: 13px;
-  color: #555555;
+  color: #5F5E5A;
   font-weight: 500;
 }
 
 .start-footer {
   padding: 0 20px;
+}
+
+.btn-start {
+  width: 100%;
+  padding: 17px;
+  margin-top: 10px;
+  background: #FAC8AA;
+  color: #5A3A28;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 12px;
+  border: none;
+  letter-spacing: -0.1px;
+  transition: opacity 0.15s, transform 0.1s;
+}
+
+.btn-start:active {
+  opacity: 0.85;
+  transform: scale(0.98);
 }
 
 /* =====================
@@ -100,7 +133,7 @@
    ===================== */
 
 .question-page {
-  background: #fafafa;
+  background: #F9EFDC;
 }
 
 .question-nav {
@@ -108,12 +141,12 @@
   align-items: center;
   gap: 14px;
   padding: 16px 20px 12px;
-  background: #fafafa;
+  background: #F9EFDC;
 }
 
 .back-btn {
   font-size: 22px;
-  color: #333333;
+  color: #2C2C2A;
   width: 36px;
   height: 36px;
   display: flex;
@@ -125,18 +158,18 @@
 }
 
 .back-btn:hover:not(:disabled) {
-  background: #eeeeee;
+  background: rgba(0, 0, 0, 0.06);
 }
 
 .back-btn:disabled {
-  color: #cccccc;
+  color: #C8BFB0;
   cursor: default;
 }
 
 .progress-wrap {
   flex: 1;
   height: 6px;
-  background: #e8e8e8;
+  background: rgba(255, 255, 255, 0.7);
   border-radius: 100px;
   overflow: hidden;
 }
@@ -144,19 +177,19 @@
 .progress-fill {
   height: 100%;
   border-radius: 100px;
-  background: #111111;
+  background: #FAC8AA;
   transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .progress-fill.extra {
-  background: linear-gradient(to right, #7F77DD, #D4537E);
+  background: #EF9F27;
 }
 
 .extra-badge {
   text-align: center;
   font-size: 12px;
   font-weight: 600;
-  color: #7F77DD;
+  color: #EF9F27;
   padding: 0 20px 6px;
   letter-spacing: 0.2px;
 }
@@ -170,16 +203,16 @@
 
 .situation-card {
   background: #ffffff;
-  border-radius: 20px;
+  border-radius: 16px;
   padding: 24px 20px;
-  margin-bottom: 28px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  margin-bottom: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .situation-text {
   font-size: 16px;
   line-height: 1.7;
-  color: #222222;
+  color: #2C2C2A;
   font-weight: 400;
   word-break: keep-all;
 }
@@ -195,29 +228,28 @@
   align-items: flex-start;
   gap: 14px;
   background: #ffffff;
-  border-radius: 18px;
+  border-radius: 12px;
   padding: 18px 20px;
   text-align: left;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   border: 2px solid transparent;
-  transition: border-color 0.15s, transform 0.1s, box-shadow 0.15s;
+  transition: border-color 0.15s, background 0.15s, transform 0.1s;
 }
 
 .option-btn:hover {
-  border-color: #dddddd;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.09);
+  border-color: rgba(250, 200, 170, 0.6);
 }
 
 .option-btn:active {
   transform: scale(0.98);
-  border-color: #111111;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-color: #FAC8AA;
+  background: rgba(250, 200, 170, 0.12);
 }
 
 .option-label {
   font-size: 13px;
   font-weight: 700;
-  color: #aaaaaa;
+  color: #888780;
   flex-shrink: 0;
   margin-top: 1px;
   width: 18px;
@@ -226,7 +258,7 @@
 .option-text {
   font-size: 15px;
   line-height: 1.6;
-  color: #222222;
+  color: #444441;
   font-weight: 400;
   word-break: keep-all;
 }
