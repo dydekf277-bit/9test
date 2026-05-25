@@ -49,6 +49,9 @@ export interface QuizState {
   isExtraVerify: boolean;
   displayStep: number;
   resultType: number | null;
+  restoredChoice: 'A' | 'B' | null;
+  centerFirstChoice: 'A' | 'B' | null;
+  centerAmbiguous: boolean;
 }
 
 export interface HistoryEntry {

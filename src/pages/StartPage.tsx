@@ -39,14 +39,13 @@ export function StartPage({ onStart }: StartPageProps) {
 
         <p className="start-subtitle">MBTI보다 정확한 내 성격을 알아봐요</p>
 
+      </div>
+
+      <div className="start-footer">
         <div className="start-badges">
           <span className="start-badge">소요시간 2분</span>
           <span className="start-badge">에니어그램</span>
         </div>
-
-      </div>
-
-      <div className="start-footer">
         <button className="btn-start" onClick={onStart}>
           테스트 시작하기
         </button>

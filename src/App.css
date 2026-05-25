@@ -72,7 +72,8 @@
 .start-badges {
   display: flex;
   gap: 8px;
-  margin-top: 52px;
+  justify-content: center;
+  margin-bottom: 14px;
 }
 
 .start-badge {
@@ -90,7 +91,7 @@
 
 .btn-start {
   width: 100%;
-  padding: 17px;
+  padding: 20px;
   margin-top: 10px;
   background: #FAC8AA;
   color: #5A3A28;
@@ -236,11 +237,22 @@
   transition: border-color 0.15s, background 0.15s, transform 0.1s;
 }
 
-.option-btn:hover {
-  border-color: rgba(250, 200, 170, 0.6);
+@media (hover: hover) {
+  .option-btn:hover:not(.selected) {
+    border-color: rgba(250, 200, 170, 0.6);
+  }
+}
+
+.option-btn:focus {
+  outline: none;
+}
+
+.option-btn:focus-visible {
+  outline: none;
 }
 
 .option-btn:active {
+  outline: none;
   transform: scale(0.98);
 }
 

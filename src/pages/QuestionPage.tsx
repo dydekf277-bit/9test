@@ -20,11 +20,10 @@ export function QuestionPage({
   onBack,
 }: QuestionPageProps) {
   const { question } = questionData;
-  const progress = (displayStep / 6) * 100;
+  const progress = (displayStep / 8) * 100;
 
   return (
     <div className="page question-page">
-      {/* 상단 네비 */}
       <div className="question-nav">
         <button
           className="back-btn"
@@ -42,28 +41,26 @@ export function QuestionPage({
         </div>
       </div>
 
-      {/* 추가 검증 배너 */}
       {isExtraVerify && (
         <div className="extra-badge">✨ 더 정확하게 알아보는 중...</div>
       )}
 
-      {/* 질문 본문 */}
       <div className="question-content">
-        <div className="situation-card">
+<div className="situation-card">
           <p className="situation-text">{question.situation}</p>
         </div>
 
         <div className="options">
           <button
             className={`option-btn${selectedAnswer === 'A' ? ' selected' : ''}`}
-            onClick={() => onAnswer('A')}
+            onClick={(e) => { e.currentTarget.blur(); onAnswer('A'); }}
           >
             <span className="option-label">A</span>
             <span className="option-text">{question.optionA}</span>
           </button>
           <button
             className={`option-btn${selectedAnswer === 'B' ? ' selected' : ''}`}
-            onClick={() => onAnswer('B')}
+            onClick={(e) => { e.currentTarget.blur(); onAnswer('B'); }}
           >
             <span className="option-label">B</span>
             <span className="option-text">{question.optionB}</span>

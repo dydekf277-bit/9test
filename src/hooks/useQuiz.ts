@@ -15,20 +15,43 @@ const INITIAL: QuizState = {
   isExtraVerify: false,
   displayStep: 1,
   resultType: null,
+  restoredChoice: null,
+  centerFirstChoice: null,
+  centerAmbiguous: false,
 };
 
+const BODY_TYPES = [8, 9, 1];
+
 function computeNext(s: QuizState, choice: 'A' | 'B'): QuizState {
-  const newStep = Math.min(s.displayStep + 1, 6);
+  const newStep = Math.min(s.displayStep + 1, 8);
 
   if (s.verifyType === null) {
-    // 탐색 단계
+    // Q1: 1차 중심 선택 → Q1b로 이동하며 centerFirstChoice 저장
+    if (s.exploreKey === 'Q1') {
+      return { ...s, exploreKey: 'Q1b', centerFirstChoice: choice, displayStep: newStep, restoredChoice: null };
+    }
+
+    // Q1b: 다수결로 중심 판정
+    if (s.exploreKey === 'Q1b') {
+      const bothBody = s.centerFirstChoice === 'A' && choice === 'A';
+      const nextKey = bothBody ? 'Q2' : 'Q3';
+      const ambiguous = !bothBody && !(s.centerFirstChoice === 'B' && choice === 'B');
+      return {
+        ...s,
+        exploreKey: nextKey,
+        centerFirstChoice: null,
+        centerAmbiguous: ambiguous,
+        displayStep: newStep,
+        restoredChoice: null,
+      };
+    }
+
     const exploreQ = q.explore[s.exploreKey];
     const next = exploreQ.next[choice];
 
     if (typeof next === 'string') {
-      return { ...s, exploreKey: next, displayStep: newStep };
+      return { ...s, exploreKey: next, displayStep: newStep, restoredChoice: null };
     } else {
-      // 검증 단계 진입
       return {
         ...s,
         verifyType: next.verify,
@@ -36,10 +59,10 @@ function computeNext(s: QuizState, choice: 'A' | 'B'): QuizState {
         currentACount: 0,
         verifyAttempts: [],
         displayStep: newStep,
+        restoredChoice: null,
       };
     }
   } else {
-    // 검증 단계
     const newACount = s.currentACount + (choice === 'A' ? 1 : 0);
 
     if (s.verifyIndex < 2) {
@@ -48,23 +71,26 @@ function computeNext(s: QuizState, choice: 'A' | 'B'): QuizState {
         verifyIndex: s.verifyIndex + 1,
         currentACount: newACount,
         displayStep: newStep,
+        restoredChoice: null,
       };
     }
 
-    // 마지막 검증 문항 처리
     const updatedAttempts: VerifyAttempt[] = [
       ...s.verifyAttempts,
       { type: s.verifyType, aCount: newACount },
     ];
 
     if (newACount >= q.logic.verifyThreshold) {
-      return { ...s, phase: 'result', resultType: s.verifyType, verifyAttempts: updatedAttempts, displayStep: 6 };
+      return { ...s, phase: 'result', resultType: s.verifyType, verifyAttempts: updatedAttempts, displayStep: 8, restoredChoice: null };
     }
 
-    // 인접 유형 재검증
     const adjacency: number[] = q.adjacency[String(s.verifyType)];
     const tried = updatedAttempts.map((a: VerifyAttempt) => a.type);
-    const nextType = adjacency.find((t: number) => !tried.includes(t));
+    let nextType = adjacency.find((t: number) => !tried.includes(t));
+
+    if (nextType === undefined && s.centerAmbiguous) {
+      nextType = BODY_TYPES.find((t: number) => !tried.includes(t));
+    }
 
     if (nextType !== undefined && updatedAttempts.length < q.logic.maxVerifyAttempts) {
       return {
@@ -75,34 +101,31 @@ function computeNext(s: QuizState, choice: 'A' | 'B'): QuizState {
         verifyAttempts: updatedAttempts,
         isExtraVerify: true,
         displayStep: newStep,
+        restoredChoice: null,
       };
     }
 
-    // 최대 시도 소진 → A 가장 많은 유형 선택 (동점 시 첫 번째 우선)
     const best = updatedAttempts.reduce((prev, curr) =>
       curr.aCount > prev.aCount ? curr : prev
     );
-    return { ...s, phase: 'result', resultType: best.type, verifyAttempts: updatedAttempts, displayStep: 6 };
+    return { ...s, phase: 'result', resultType: best.type, verifyAttempts: updatedAttempts, displayStep: 8, restoredChoice: null };
   }
 }
 
 export function useQuiz() {
   const [state, setState] = useState<QuizState>(INITIAL);
   const [history, setHistory] = useState<HistoryEntry[]>([]);
-  // UI 복원용: 뒤로가기로 돌아온 문항에서만 이전 선택을 표시, 앞으로 갈 땐 항상 null
-  const [restoredChoice, setRestoredChoice] = useState<'A' | 'B' | null>(null);
+  const [questionSeq, setQuestionSeq] = useState(0);
 
   const start = () => {
     setHistory([]);
-    setRestoredChoice(null);
+    setQuestionSeq(0);
     setState({ ...INITIAL, phase: 'question' });
   };
 
   const answer = (choice: 'A' | 'B') => {
-    // 히스토리에 현재 state + 선택값 기록 (뒤로가기 시 복원용)
     setHistory(h => [...h, { state, choice }]);
-    // 앞으로 갈 땐 항상 선택 강조 없음
-    setRestoredChoice(null);
+    setQuestionSeq(n => n + 1);
     setState(prev => computeNext(prev, choice));
   };
 
@@ -110,14 +133,13 @@ export function useQuiz() {
     if (history.length === 0) return;
     const last = history[history.length - 1];
     setHistory(h => h.slice(0, -1));
-    // 돌아간 문항에서 이전에 골랐던 선택을 복원
-    setRestoredChoice(last.choice);
-    setState(last.state);
+    setQuestionSeq(n => n + 1);
+    setState({ ...last.state, restoredChoice: last.choice });
   };
 
   const restart = () => {
     setHistory([]);
-    setRestoredChoice(null);
+    setQuestionSeq(0);
     setState(INITIAL);
   };
 
@@ -135,8 +157,8 @@ export function useQuiz() {
   return {
     state,
     canGoBack: history.length > 0,
+    questionSeq,
     currentQuestion: getCurrentQuestion(),
-    restoredChoice,
     start,
     answer,
     goBack,
