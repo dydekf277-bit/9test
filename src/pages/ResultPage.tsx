@@ -36,6 +36,11 @@ export function ResultPage({ typeData, onRestart }: ResultPageProps) {
       <div className="result-header" style={{ background: headerGradient }}>
         <span className="type-label" style={{ color: mutedColor }}>TYPE {id}</span>
 
+        <div className="result-names">
+          <p className="result-subtitle" style={{ color: textColor }}>{subtitle}</p>
+          <h1 className="result-name" style={{ color: textColor }}>{name}</h1>
+        </div>
+
         {imgFailed ? (
           <span className="character-fallback-emoji">{emoji}</span>
         ) : (
@@ -47,14 +52,9 @@ export function ResultPage({ typeData, onRestart }: ResultPageProps) {
           />
         )}
 
-        <div className="result-names">
-          <p className="result-subtitle" style={{ color: mutedColor }}>{subtitle}</p>
-          <h1 className="result-name" style={{ color: textColor }}>{name}</h1>
+        <div className="speech-bubble" style={{ color: color.main }}>
+          {tag}
         </div>
-
-        <p className="result-slogan" style={{ color: mutedColor }}>
-          <em>"{tag}"</em>
-        </p>
       </div>
 
       {/* ── 바디 ── */}
@@ -117,7 +117,7 @@ export function ResultPage({ typeData, onRestart }: ResultPageProps) {
           </button>
           <button
             className="btn-cta-share"
-            style={{ background: headerGradient }}
+            style={{ background: color.main }}
             onClick={handleShare}
           >
             공유하기

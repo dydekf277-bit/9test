@@ -299,7 +299,7 @@
   width: 200px;
   height: auto;
   display: block;
-  margin: 8px auto 12px;
+  margin: 16px auto 4px;
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.12));
 }
 
@@ -318,8 +318,8 @@
 }
 
 .result-subtitle {
-  font-size: 14px;
-  font-weight: 400;
+  font-size: 19px;
+  font-weight: 700;
   line-height: 1.4;
 }
 
@@ -330,10 +330,28 @@
   line-height: 1.2;
 }
 
-.result-slogan {
+.speech-bubble {
+  position: relative;
+  display: inline-block;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 8px 18px;
   font-size: 14px;
-  margin-top: 4px;
+  font-weight: 600;
   font-style: italic;
+  margin-top: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.10);
+}
+
+.speech-bubble::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid #ffffff;
 }
 
 /* 바디 */
